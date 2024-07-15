@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import MainText1 from "@/components/MainText_WelcomePage";
-import NextButton from "@/components/NextButton"
-import ProgressBar from "./ProgressBar";
+import NextButton from "@/components/NextButtontoMic"
+import ProgressBar from "@/components/ProgressBar";
 
 export default function WelcomePage() {
   return (
