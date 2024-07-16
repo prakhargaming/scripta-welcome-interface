@@ -3,8 +3,16 @@ import MainText1 from "@/components/MainText_WelcomePage";
 import NextButtontoInterface from "@/components/NextButtontoInterface";
 import ProgressBar from "@/components/ProgressBar";
 import Image from "next/image";
+import SegmentedProgressBar from "@/components/SegmentedProgressBar";
 
 export default function microphonePage() {
+    const segments = [
+        { href: '/welcome', active: true },
+        { href: '/step1' },
+        { href: '/step2' },
+        { href: '/step3' },
+      ];
+
     return (
         <div className="bg-[url('/background.png')] bg-center min-h-screen">
             <div className="flex flex-col min-h-screen px-16 py-8">
@@ -41,7 +49,7 @@ export default function microphonePage() {
                         </div>
                     </div>
                 </div>
-                <ProgressBar progress={50} />
+                <SegmentedProgressBar segments={segments}/>
             </div>
         </div>
     );

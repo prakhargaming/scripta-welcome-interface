@@ -165,8 +165,8 @@ body {
 }
 
 .bigMic {
-  width: 203.752px;
-  height: 300.047px;
+  width: 250.752px;
+  height: 350.047px;
   flex-shrink: 0;
 }
 
@@ -181,4 +181,38 @@ body {
   width: 290px;
   height: 80px;
   flex-shrink: 0;
+}
+
+.segment-inactive {
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  border: 1px solid #05B1E2;
+  background: linear-gradient(90deg, rgba(18, 155, 255, 0.35) 5%, rgba(0, 0, 0, 0.35) 36.5%, rgba(18, 155, 255, 0.35) 100%);
+  box-shadow: 0px 3px 12px 3px #000;
+  backdrop-filter: blur(5.599999904632568px);
+}
+
+.segment-active-base {
+  height: 8px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #19ACBC -1125%, #173B76 1356.25%);
+}
+
+.segment-active-middle {
+  height: 8px;
+  border-radius: 18px;
+  border: 1px solid #FFF;
+  background: linear-gradient(180deg, #19ACBC -450%, #173B76 737.5%);
+  mix-blend-mode: plus-lighter;
+  filter: blur(6.650000095367432px);
+}
+
+.segment-active-top {
+  height: 8px;
+  border-radius: 18px;
+  border: 1px solid #FFF;
+  background: linear-gradient(180deg, #19ACBC -450%, #173B76 737.5%);
+  mix-blend-mode: plus-lighter;
+  box-shadow: 0px 3px 12px 3px #000;
 }

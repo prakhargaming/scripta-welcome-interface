@@ -11,10 +11,4 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Different Pages and Figma
-This is the [link](https://www.figma.com/design/4TTKiZBWNj3BVHnpH7McFs/VDart-Figma?node-id=1439-126&t=E4HT0VewWMuu1kLp-0) to the Figma design. All .tsx pages can be found in the `./src/pages` directory.
-
-- **welcomePage.tsx** corresponds to **Welcome** on the Figma in **Pramit's Workspace**
-- **microphonePage.tsx** corresponds to **Step 1** on the Figma in **Pramit's Workspace**
-- **answerPage.tsx** corresponds to **Step 2** on the Figma in **Pramit's Workspace**
-- **voicePage.tsx** corresponds to **Step 3** on the Figma in **Pramit's Workspace**
-- **interfacePage1.tsx** corresponds to **Interview Interface fed in** on the Figma in **Pramit's Workspace**
+This is the [link](https://www.figma.com/design/4TTKiZBWNj3BVHnpH7McFs/VDart-Figma?node-id=1439-126&t=E4HT0VewWMuu1kLp-0) to the Figma design. All .tsx pages can be found in the `./src/pages` directory. Every `[name].tsx` page in the `./src/pages` directory corresponds to it's respective page in the Figma design. I am still working on stylization fixes and as well as generally optimizing the code.

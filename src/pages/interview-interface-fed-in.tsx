@@ -4,12 +4,14 @@ import Image from "next/image";
 
 export default function InterviewPage1() {
     const [isRecording, setIsRecording] = useState(false);
-    const [audioURL, setAudioURL] = useState(null);
+    const [audioBlob, setAudioBlob] = useState(null);
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
+    const streamRef = useRef(null);
 
     const startRecording = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        streamRef.current = stream;
         const mediaRecorder = new MediaRecorder(stream);
         mediaRecorderRef.current = mediaRecorder;
 
@@ -19,8 +21,7 @@ export default function InterviewPage1() {
 
         mediaRecorder.onstop = () => {
             const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-            const audioUrl = URL.createObjectURL(audioBlob);
-            setAudioURL(audioUrl);
+            setAudioBlob(audioBlob);
             audioChunksRef.current = [];
         };
 
@@ -28,9 +29,17 @@ export default function InterviewPage1() {
         setIsRecording(true);
     };
 
+    const stopMediaTracks = (stream) => {
+        stream.getTracks().forEach(track => track.stop());
+    };
+
     const stopRecording = () => {
         if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
+            if (streamRef.current) {
+                stopMediaTracks(streamRef.current);
+                streamRef.current = null;
+            }
             setIsRecording(false);
         }
     };
@@ -43,15 +52,32 @@ export default function InterviewPage1() {
         }
     };
 
-    const handleDownload = () => {
-        if (audioURL) {
-            const a = document.createElement('a');
-            document.body.appendChild(a);
-            a.style = 'display: none';
-            a.href = audioURL;
-            a.download = 'recording.wav';
-            a.click();
-            window.URL.revokeObjectURL(audioURL);
+    const sendAudioToServer = async (audioBlob) => {
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'recording.wav');
+
+        try {
+            const response = await fetch('/api/save-audio', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                console.log('Audio saved successfully');
+                // You can add user feedback here, e.g., showing a success message
+            } else {
+                console.error('Failed to save audio');
+                // You can add user feedback here, e.g., showing an error message
+            }
+        } catch (error) {
+            console.error('Error saving audio:', error);
+            // You can add user feedback here, e.g., showing an error message
+        }
+    };
+
+    const handleSave = () => {
+        if (audioBlob) {
+            sendAudioToServer(audioBlob);
         }
     };
 
@@ -83,13 +109,13 @@ export default function InterviewPage1() {
                         <div className="mt-4">
                             {isRecording ? 'Recording...' : 'Click to start recording'}
                         </div>
-                        {audioURL && (
+                        {audioBlob && (
                             <div className="mt-4">
                                 <button 
-                                    onClick={handleDownload}
+                                    onClick={handleSave}
                                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                 >
-                                    Download Recording
+                                    Save Recording?
                                 </button>
                             </div>
                         )}
