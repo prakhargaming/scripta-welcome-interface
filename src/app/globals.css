@@ -163,3 +163,22 @@ body {
 .leFont {
   font-family: Outfit;
 }
+
+.bigMic {
+  width: 203.752px;
+  height: 300.047px;
+  flex-shrink: 0;
+}
+
+.bigWave {
+  flex-shrink: 0;
+  fill: linear-gradient(180deg, #1947BC 0%, #0B4F56 135.63%);
+  mix-blend-mode: plus-lighter;
+  filter: blur(13.050000190734863px);
+}
+
+.startInterview {
+  width: 290px;
+  height: 80px;
+  flex-shrink: 0;
+}

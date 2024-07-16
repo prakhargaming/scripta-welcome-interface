@@ -6,7 +6,7 @@ function NextButtontoMic() {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push('/microphonePage');
+        router.push('/step1');
     };
 
     return (

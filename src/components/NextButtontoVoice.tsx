@@ -6,7 +6,7 @@ function NextButtontoVoice() {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push('/voicePage');
+        router.push('/step3');
     };
 
     return (

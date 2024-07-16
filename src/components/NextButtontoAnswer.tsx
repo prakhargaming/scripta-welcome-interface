@@ -6,7 +6,7 @@ function NextButtontoAnswer() {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push('/answerPage');
+        router.push('/step2');
     };
 
     return (
