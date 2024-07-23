@@ -10,7 +10,7 @@ function NextButtontoInterface() {
     };
 
     return (
-        <div className="relative w-40 h-20" onClick={handleClick}>
+        <div className="relative w-[290px] h-[80px]" onClick={handleClick}>
             {/* Rest of your button code */}
             <div className="absolute inset-0 flex items-center justify-center text-white text-xl font-normal font-['Outfit'] z-10 cursor-pointer">
                 <span>START INTERVIEW</span>

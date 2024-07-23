@@ -10,7 +10,7 @@ export default function WelcomePage() {
       <Header />
       <div className="h-[45px]" />
       <MainText1 />
-      <div className="h-[45px]" />
+      <div className="h-[45px] hover" />
       <NextButton />
       <div className="flex-grow h-[45px]" /> {/* This creates space between the button and progress bar */}
       <ProgressBar progress={50} />

@@ -51,8 +51,11 @@ body {
 }
 
 .custom-text1 {
+  width: 912px;
+  height: 226px;
+  flex-shrink: 0;
   font-feature-settings: 'clig' off, 'liga' off;
-  font-family: Outfit, sans-serif;
+  font-family: Outfit;
   font-size: 130px;
   font-style: normal;
   font-weight: 400;
@@ -81,30 +84,25 @@ body {
   -webkit-text-fill-color: transparent;
   mix-blend-mode: plus-lighter;
   filter: blur(10.350000381469727px);
+
 }
 
-.custom-text3 {
-  background-image: linear-gradient(180deg, #19ACBC 76.99%, #173B76 111.5%);
+.custom-text4 {
+  width: 1024px;
+  height: auto;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.87);
   font-feature-settings: 'clig' off, 'liga' off;
   font-family: Outfit;
   font-size: 130px;
   font-style: normal;
   font-weight: 400;
-  line-height: 120%; /* 156px */
+  line-height: 100%;
   letter-spacing: -2.6px;
-  color: white;
-}
-
-.custom-text4 {
-  background-image: linear-gradient(180deg, #1947BC 76.99%, #173B76 111.5%);
+  background: linear-gradient(180deg, #19ACBC 76.99%, #173B76 97.1%);
   background-clip: text;
   -webkit-background-clip: text;
-  color: transparent;
-  font-size: 130px;
-  font-weight: 400;
-  font-family: 'Outfit', sans-serif;
-  line-height: 144.30px;
-  letter-spacing: -2.6px;
+  -webkit-text-fill-color: transparent;
 }
 
 .backgroundInterview {
@@ -170,6 +168,12 @@ body {
   flex-shrink: 0;
 }
 
+.bigPaper {
+  width: 282.439px;
+  height: 277.317px;
+  flex-shrink: 0;
+}
+
 .bigWave {
   flex-shrink: 0;
   fill: linear-gradient(180deg, #1947BC 0%, #0B4F56 135.63%);
@@ -215,4 +219,35 @@ body {
   background: linear-gradient(180deg, #19ACBC -450%, #173B76 737.5%);
   mix-blend-mode: plus-lighter;
   box-shadow: 0px 3px 12px 3px #000;
+}
+
+/* .equalizer-icon {
+  width: 243px;
+  height: 243px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.equalizer-icon svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.equalizer-icon .base {
+  fill: url(#gradient);
+}
+
+.equalizer-icon .middle {
+  mix-blend-mode: plus-lighter;
+  filter: blur(6.8px);
+}
+
+.equalizer-icon .top {
+  mix-blend-mode: plus-lighter;
+  filter: blur(13.05px);
+} */
+
+.hover {
+  transform: scale(1.05);
 }

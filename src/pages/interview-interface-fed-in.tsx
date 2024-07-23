@@ -1,6 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from "@/components/Header";
 import Image from "next/image";
+import AWS from 'aws-sdk';
+
+AWS.config.update({
+    accessKeyId: process.env.ACCESS_ID_KEY,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY, 
+    endpoint: 'https://scriptaaudiofiles.nyc3.digitaloceanspaces.com'
+  });
+  
+const s3 = new AWS.S3();
 
 export default function InterviewPage1() {
     const [isRecording, setIsRecording] = useState(false);
@@ -52,34 +61,30 @@ export default function InterviewPage1() {
         }
     };
 
-    const sendAudioToServer = async (audioBlob) => {
-        const formData = new FormData();
-        formData.append('audio', audioBlob, 'recording.wav');
-
+    const uploadToDigitalOcean = async (audioBlob) => {
+        const params = {
+          Bucket: 'scriptaaudiofiles',
+          Key: `recording-${Date.now()}.wav`,
+          Body: audioBlob,
+          ACL: 'public-read',
+          ContentType: 'audio/wav'
+        };
+      
         try {
-            const response = await fetch('/api/save-audio', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-                console.log('Audio saved successfully');
-                // You can add user feedback here, e.g., showing a success message
-            } else {
-                console.error('Failed to save audio');
-                // You can add user feedback here, e.g., showing an error message
-            }
+          const data = await s3.upload(params).promise();
+          console.log('Audio uploaded successfully', data.Location);
+          // You can add user feedback here, e.g., showing a success message
         } catch (error) {
-            console.error('Error saving audio:', error);
-            // You can add user feedback here, e.g., showing an error message
+          console.error('Error uploading audio:', error);
+          // You can add user feedback here, e.g., showing an error message
         }
-    };
+      };
 
-    const handleSave = () => {
+      const handleSave = () => {
         if (audioBlob) {
-            sendAudioToServer(audioBlob);
+          uploadToDigitalOcean(audioBlob);
         }
-    };
+      };
 
     return (
         <div className="relative min-h-screen">

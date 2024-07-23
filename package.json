@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.4",
+    "aws-sdk": "^2.1661.0",
     "busboy": "^1.6.0",
     "firebase": "^10.12.3",
     "formidable": "^3.5.1",

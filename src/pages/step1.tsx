@@ -9,8 +9,8 @@ import Image from "next/image";
 
 export default function microphonePage() {
     const segments = [
-        { href: '/welcome', active: true },
-        { href: '/step1' },
+        { href: '/welcome'},
+        { href: '/step1', active: true},
         { href: '/step2' },
         { href: '/step3' },
       ];

@@ -1,16 +1,15 @@
 import Header from "@/components/Header";
-import MainText1 from "@/components/MainText_WelcomePage";
 import NextButtontoInterface from "@/components/NextButtontoInterface";
-import ProgressBar from "@/components/ProgressBar";
 import Image from "next/image";
+import EqualizerIcon from "@/components/EqualizerIcon";
 import SegmentedProgressBar from "@/components/SegmentedProgressBar";
 
 export default function microphonePage() {
     const segments = [
-        { href: '/welcome', active: true },
+        { href: '/welcome'},
         { href: '/step1' },
         { href: '/step2' },
-        { href: '/step3' },
+        { href: '/step3' , active: true},
       ];
 
     return (
@@ -19,13 +18,7 @@ export default function microphonePage() {
                 <Header />
                 <div className="flex-grow flex justify-start items-center">
                     <div className="flex flex-row items-center pl-[100px]">
-                        <Image
-                            src="/audio.svg"
-                            alt="Description of SVG"
-                            width={100}
-                            height={100}
-                            className="bigWave"
-                        />
+                        <EqualizerIcon/>
                         <div className="w-[87.62px]"></div>
                         <div>
                             <div className="h-[45px]" />

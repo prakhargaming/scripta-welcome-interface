@@ -7,9 +7,9 @@ import SegmentedProgressBar from "@/components/SegmentedProgressBar";
 
 export default function microphonePage() {
     const segments = [
-        { href: '/welcome', active: true },
+        { href: '/welcome'},
         { href: '/step1' },
-        { href: '/step2' },
+        { href: '/step2', active: true},
         { href: '/step3' },
       ];
 
@@ -18,13 +18,13 @@ export default function microphonePage() {
             <div className="flex flex-col min-h-screen px-16 py-8">
                 <Header />
                 <div className="flex-grow flex justify-start items-center">
-                    <div className="flex flex-row items-center pl-[100px]">
+                    <div className="flex flex-row items-center pl-[100px] ">
                         <Image
                             src="/read.svg"
                             alt="Description of SVG"
                             width={100}
                             height={100}
-                            className="bigMic"
+                            className="bigMic -mt-[100px]"
                         />
                         <div className="w-[87.62px]"></div>
                         <div>
