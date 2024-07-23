@@ -38,7 +38,7 @@ export default function microphonePage() {
                                     <div className="custom-text2 absolute top-0 left-0">Question</div>
                                 </div>
                             </div>
-                            <div className="h-[20px]"></div> {/* This adds 28px of space */}
+                            <div className="h-[20px]"></div> 
                             <div className="text-left text-white text-[25px] font-light font-['Outfit'] leading-[30px]">
                                 You will have 15 seconds to carefully read the question
                             </div>

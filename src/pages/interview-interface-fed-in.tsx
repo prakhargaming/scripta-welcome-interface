@@ -4,9 +4,9 @@ import Image from "next/image";
 import AWS from 'aws-sdk';
 
 AWS.config.update({
-    accessKeyId: process.env.ACCESS_ID_KEY,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY, 
-    endpoint: 'https://scriptaaudiofiles.nyc3.digitaloceanspaces.com'
+    accessKeyId: process.env.REACT_APP_DO_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_DO_SECRET_ACCESS_KEY,
+    endpoint: 'https://nyc3.digitaloceanspaces.com'
   });
   
 const s3 = new AWS.S3();
@@ -14,28 +14,33 @@ const s3 = new AWS.S3();
 export default function InterviewPage1() {
     const [isRecording, setIsRecording] = useState(false);
     const [audioBlob, setAudioBlob] = useState(null);
+    const [error, setError] = useState(null);
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
     const streamRef = useRef(null);
 
     const startRecording = async () => {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        streamRef.current = stream;
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorderRef.current = mediaRecorder;
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            streamRef.current = stream;
+            const mediaRecorder = new MediaRecorder(stream);
+            mediaRecorderRef.current = mediaRecorder;
 
-        mediaRecorder.ondataavailable = (event) => {
-            audioChunksRef.current.push(event.data);
-        };
+            mediaRecorder.ondataavailable = (event) => {
+                audioChunksRef.current.push(event.data);
+            };
 
-        mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-            setAudioBlob(audioBlob);
-            audioChunksRef.current = [];
-        };
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+                setAudioBlob(audioBlob);
+                audioChunksRef.current = [];
+            };
 
-        mediaRecorder.start();
-        setIsRecording(true);
+            mediaRecorder.start();
+            setIsRecording(true);
+        } catch (err) {
+            setError('Error accessing microphone: ' + err.message);
+        }
     };
 
     const stopMediaTracks = (stream) => {
@@ -63,28 +68,29 @@ export default function InterviewPage1() {
 
     const uploadToDigitalOcean = async (audioBlob) => {
         const params = {
-          Bucket: 'scriptaaudiofiles',
-          Key: `recording-${Date.now()}.wav`,
-          Body: audioBlob,
-          ACL: 'public-read',
-          ContentType: 'audio/wav'
+            Bucket: 'scriptaaudiofiles',
+            Key: `recording-${Date.now()}.webm`,  // Changed to .webm
+            Body: audioBlob,
+            ACL: 'public-read',
+            ContentType: 'audio/webm'  // Changed to audio/webm
         };
       
         try {
-          const data = await s3.upload(params).promise();
-          console.log('Audio uploaded successfully', data.Location);
-          // You can add user feedback here, e.g., showing a success message
+            const data = await s3.upload(params).promise();
+            console.log('Audio uploaded successfully', data.Location);
+            alert("Audio uploaded successfully: " + data.Location);
         } catch (error) {
-          console.error('Error uploading audio:', error);
-          // You can add user feedback here, e.g., showing an error message
+            console.error('Error uploading audio:', error);
+            alert("Error uploading audio: " + error.message);
+            setError('Error uploading audio: ' + error.message);  // Update the error state
         }
-      };
+    };
 
-      const handleSave = () => {
+    const handleSave = () => {
         if (audioBlob) {
-          uploadToDigitalOcean(audioBlob);
+            uploadToDigitalOcean(audioBlob);
         }
-      };
+    };
 
     return (
         <div className="relative min-h-screen">
@@ -122,6 +128,11 @@ export default function InterviewPage1() {
                                 >
                                     Save Recording?
                                 </button>
+                            </div>
+                        )}
+                        {error && (
+                            <div className="mt-4 text-red-500">
+                                {error}
                             </div>
                         )}
                     </div>
