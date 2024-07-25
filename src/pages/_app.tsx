@@ -1,13 +1,19 @@
-import '@/app/globals.css';
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
-import type { AppProps } from 'next/app'
+// src/pages/_app.tsx
+'use client';
 
-function MyApp({ Component, pageProps }: AppProps) {
+import type { AppProps } from 'next/app';
+import { SessionProvider } from 'next-auth/react';
+import { AuthProvider } from '../context/AuthContext';
+import "../app/globals.css";
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <ClerkProvider {...pageProps}>
+    <SessionProvider session={session}>
+      <AuthProvider>
         <Component {...pageProps} />
-    </ClerkProvider>
-  )
+      </AuthProvider>
+    </SessionProvider>
+  );
 }
 
 export default MyApp;

@@ -1,14 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Header from "@/components/Header";
 import Image from "next/image";
 import AWS from 'aws-sdk';
+import { useAuth } from '../context/AuthContext';  // Import the useAuth hook
 
 AWS.config.update({
-    accessKeyId: process.env.REACT_APP_DO_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_DO_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.NEXT_PUBLIC_DO_ACCESS_KEY_ID,
+    secretAccessKey: process.env.NEXT_PUBLIC_DO_SECRET_ACCESS_KEY, 
     endpoint: 'https://nyc3.digitaloceanspaces.com'
-  });
-  
+});
+
 const s3 = new AWS.S3();
 
 export default function InterviewPage1() {
@@ -18,6 +19,7 @@ export default function InterviewPage1() {
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
     const streamRef = useRef(null);
+    const { user, sessionUser } = useAuth();  // Access user information
 
     const startRecording = async () => {
         try {
@@ -67,14 +69,23 @@ export default function InterviewPage1() {
     };
 
     const uploadToDigitalOcean = async (audioBlob) => {
+        if (!user && !sessionUser) {
+            setError('User is not authenticated');
+            return;
+        }
+
+        const userId = user?.uid || sessionUser?.id;
+        const email = user?.email || sessionUser?.email;
+        const filename = `recording-${userId || email}-${Date.now()}.webm`;
+
         const params = {
             Bucket: 'scriptaaudiofiles',
-            Key: `recording-${Date.now()}.webm`,  // Changed to .webm
+            Key: filename,
             Body: audioBlob,
             ACL: 'public-read',
-            ContentType: 'audio/webm'  // Changed to audio/webm
+            ContentType: 'audio/webm'
         };
-      
+
         try {
             const data = await s3.upload(params).promise();
             console.log('Audio uploaded successfully', data.Location);
@@ -82,7 +93,7 @@ export default function InterviewPage1() {
         } catch (error) {
             console.error('Error uploading audio:', error);
             alert("Error uploading audio: " + error.message);
-            setError('Error uploading audio: ' + error.message);  // Update the error state
+            setError('Error uploading audio: ' + error.message);
         }
     };
 
